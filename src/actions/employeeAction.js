@@ -1,12 +1,12 @@
 import Actions from "../actionConstants/employeeActionConstants";
 import { getAllEmployeesBypageApi, uploadCsvApi } from "../apis";
 
-export const getAllEmployeesBypage = (pageNumber, pageLimit) => {
+export const getAllEmployeesBypage = (pageNumber, pageLimit, employeeName='') => {
   return async (dispatch) => {
     dispatch({ type: Actions.EMPLOYEES_REQUESTED });
 
     try {
-      let response = await getAllEmployeesBypageApi(pageNumber, pageLimit);
+      let response = await getAllEmployeesBypageApi(pageNumber, pageLimit, employeeName);
       dispatch({
         type: Actions.EMPLOYEES_RECEIVED,
         payload: { employeeList: response.data },
@@ -25,8 +25,8 @@ export const uploadCsv = (formData) => {
     dispatch({ type: Actions.CSV_UPLOAD_REQUESTED });
     try {
       let response = await uploadCsvApi(formData);
-      if(response.data.success)
-        window.location = window.location.origin+"/#/viewEmployees";
+      if (response.data.success)
+        window.location = window.location.origin + "/#/viewEmployees";
       dispatch({
         type: Actions.CSV_UPLOAD_RECEIVED,
         payload: { uploadStatus: response.data },
@@ -40,3 +40,15 @@ export const uploadCsv = (formData) => {
   };
 };
 
+export const setSearchKey = (searchKey) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: 'SET_SEARCH_KEY',
+        payload: { searchKey: searchKey },
+      });
+    } catch (e) {
+       console.log('something went wrong while setting search key')
+    }
+  };
+};

@@ -2,13 +2,15 @@ import axios from "axios";
 
 const baseUrl = "http://localhost:5000/";
 
-export const getAllEmployeesBypageApi = (pageNumber, pageLimit) => {
+export const getAllEmployeesBypageApi = (pageNumber, pageLimit, employeeName) => {
   return axios.get(
     baseUrl +
       "api/employee?pageNumber=" +
       pageNumber +
       "&pageLimit=" +
-      pageLimit
+      pageLimit + 
+      "&employeeName=" + 
+      employeeName
   );
 };
 

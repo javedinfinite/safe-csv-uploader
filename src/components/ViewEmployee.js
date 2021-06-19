@@ -9,8 +9,8 @@ class ViewEmployees extends React.Component {
     this.props.dispatch(getAllEmployeesBypage(1, 5));
   }
 
-  setData = (pageNumber, pageLimit) => {
-    this.props.dispatch(getAllEmployeesBypage(pageNumber, pageLimit));
+  setData = (pageNumber, pageLimit, employeeName='') => {
+    this.props.dispatch(getAllEmployeesBypage(pageNumber, pageLimit, employeeName));
   };
 
   render() {
@@ -22,6 +22,7 @@ class ViewEmployees extends React.Component {
       TotalEmployeesCount,
       currentPage,
       pageLimit,
+      searchKey
     } = this.props;
     return (
       <EmployeeTable
@@ -31,6 +32,7 @@ class ViewEmployees extends React.Component {
         totalPages={TotalPages}
         currentPage={currentPage}
         TotalRows={TotalEmployeesCount}
+        searchKey={searchKey}
       />
     );
   }
@@ -46,6 +48,7 @@ const mapStateToProps = (state, props) => {
     TotalEmployeesCount: state.employeeReducer.totalEmployeesCount,
     currentPage: state.employeeReducer.currentPage,
     pageLimit: state.employeeReducer.pageLimit,
+    searchKey: state.employeeReducer.searchKey
   };
 };
 

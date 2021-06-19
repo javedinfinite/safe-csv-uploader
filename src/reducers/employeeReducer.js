@@ -10,6 +10,7 @@ const initialState = {
   currentPage: 0,
   limit: 5,
   error: "",
+  searchKey:''
 };
 
 export default (state = initialState, action) => {
@@ -59,6 +60,13 @@ export default (state = initialState, action) => {
         ...state,
         error: action.error || "Something went wrong while uploading csv",
         isLoading: false,
+      };
+
+    case 'SET_SEARCH_KEY':
+      return {
+        ...state,
+        error: action.error || "Something went wrong while uploading csv",
+        searchKey: action.payload.searchKey || ''
       };
     default:
       return state;

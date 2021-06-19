@@ -7,6 +7,9 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
 import { Link } from "react-router-dom";
+import _ from "lodash";
+import { getAllEmployeesBypage, setSearchKey } from "../actions/employeeAction";
+import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,6 +68,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchAppBar() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  var debounce_fun = _.debounce((searchKey) => {
+    dispatch(getAllEmployeesBypage(1, 5, searchKey));
+    dispatch(setSearchKey(searchKey));
+  }, 1000);
+
+  const searchMe = (event) => {
+    debounce_fun(event.target.value);
+  };
 
   return (
     <div className={classes.root}>
@@ -115,6 +127,7 @@ export default function SearchAppBar() {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              onChange={searchMe}
               inputProps={{ "aria-label": "search" }}
             />
           </div>

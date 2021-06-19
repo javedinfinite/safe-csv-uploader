@@ -58,11 +58,11 @@ export default function EmployeeTable(prop) {
   };
 
   const handleChangePage = (event, page) => {
-    prop.setData(page + 1, prop.pageLimit);
+    prop.setData(page + 1, prop.pageLimit, prop.searchKey);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    prop.setData(1, parseInt(event.target.value, 10));
+    prop.setData(1, parseInt(event.target.value, 10), prop.searchKey);
   };
 
   const handleChangeDense = (event) => {
