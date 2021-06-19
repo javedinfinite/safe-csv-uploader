@@ -41,7 +41,7 @@ const CsvUploader = (prop) => {
     const formData = new FormData();
     formData.append("file", file);
     dispatch(uploadCsv(formData));
-    setTimeout(()=>setOpen(true),1000)
+    setTimeout(()=>setOpen(true),1)
     
   };
 
