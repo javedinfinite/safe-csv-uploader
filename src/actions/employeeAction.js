@@ -26,7 +26,7 @@ export const uploadCsv = (formData) => {
     try {
       let response = await uploadCsvApi(formData);
       if (response.data.success)
-        window.location = window.location.origin + "/#/viewEmployees";
+        // window.location = window.location.origin + "/#/viewEmployees";
       dispatch({
         type: Actions.CSV_UPLOAD_RECEIVED,
         payload: { uploadStatus: response.data },

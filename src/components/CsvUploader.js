@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CsvDownloader from "./CsvDownloader";
 import { uploadCsv } from "../actions/employeeAction";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   import: {
@@ -27,12 +28,15 @@ const CsvUploader = (prop) => {
 
   const classes = useStyles();
   const [file, setFile] = useState("");
+  const history = useHistory();
 
   const upload = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", file);
     dispatch(uploadCsv(formData));
+    setTimeout(()=>history.push("/viewEmployees"),1000)
+    
   };
 
   const onChange = (e) => {
