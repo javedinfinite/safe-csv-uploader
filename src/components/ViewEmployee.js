@@ -12,7 +12,7 @@ import _ from 'lodash'
 class ViewEmployees extends React.Component {
 
   componentDidMount() {
-    this.props.dispatch(getAllEmployeesBypage(1, 10))
+    this.props.dispatch(getAllEmployeesBypage(1, 5))
   }
   
 
@@ -32,8 +32,8 @@ class ViewEmployees extends React.Component {
 
 
 const mapStateToProps = (state, props) => {
-    if(!_.isEmpty(state.employeeReducer))
-      console.log("from viewemployees..............",state.employeeReducer.pageLimit)
+    // if(!_.isEmpty(state.employeeReducer))
+    //   console.log("from viewemployees..............",state.employeeReducer.pageLimit)
   return {
     employeeList: state.employeeReducer.employeeList,
     error:  state.employeeReducer.error,

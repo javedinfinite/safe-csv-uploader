@@ -22,9 +22,7 @@ export default function CsvTable(prop) {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("id");
   const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (event, property) => {
     console.log("property........" + property);
@@ -62,31 +60,23 @@ export default function CsvTable(prop) {
     setSelected(newSelected);
   };
 
-  const getDataOnPageChange = async (e, pageNumber) => {
-    console.log(pageNumber);
-    try {
-      const res = await axios.get(
-        "http://localhost:5000/api/employee?pageNumber=" +
-          pageNumber +
-          "&pageLimit=25"
-      );
-      console.log(res.data.data);
-      prop.setData(res.data.data);
-      // setData(res.data.data)
-    } catch (err) {
-      console.log("something went wrong");
-    }
+  const handleChangePage = (event, page) => {
+    console.log( page )
+    // setPage(page);
+    // console.log("prop.Currentpage", prop.currentPage)
+    console.log("...........",prop.currentPage-1, prop.pageLimit)
+    prop.setData(page+1, prop.pageLimit );
   };
 
-  const handleChangePage = (event, page) => {
-    console.log(event.target.value, page )
-    // setPage(page);
-    console.log("prop.Currentpage", prop.currentPage)
-    prop.setData(page+1, 5 );
-  };
+  // console.log("prop.pageLimit", prop.pageLimit, prop.currentPage)
+  // console.log("...........",prop.currentPage * prop.pageLimit, prop.currentPage * prop.pageLimit + prop.pageLimit)
 
   const handleChangeRowsPerPage = (event) => {
-    prop.setData(1, event.target.value);
+    prop.setData(1, parseInt(event.target.value, 10));
+    console.log("prop.pageLimit", prop.pageLimit, prop.currentPage)
+    // console.log("...........",prop.currentPage * prop.pageLimit, prop.currentPage * prop.pageLimit + prop.pageLimit)
+    console.log("...........",prop.currentPage-1, prop.pageLimit)
+    
     // setRowsPerPage(parseInt(event.target.value, 10));
     // setPage(0);
   };
@@ -101,13 +91,14 @@ export default function CsvTable(prop) {
     console.log("clear table clicked");
     rows.length = 0;
     setOrder(order == "desc" ? "asc" : "desc");
-    setRowsPerPage(5);
+    // setRowsPerPage(5);
   };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  // const emptyRows = prop.pageLimit - Math.min(prop.pageLimit, rows.length - prop.currentPage-1 * prop.pageLimit);
+
+
 
   return (
     <div className={classes.root}>
@@ -131,7 +122,7 @@ export default function CsvTable(prop) {
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .slice(0, prop.pageLimit) //page * rowsPerPage, page * rowsPerPage + rowsPerPage
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
@@ -174,11 +165,11 @@ export default function CsvTable(prop) {
                     </TableRow>
                   );
                 })}
-              {emptyRows > 0 && (
+              {/* {emptyRows > 0 && (
                 <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
                   <TableCell colSpan={6} />
                 </TableRow>
-              )}
+              )} */}
             </TableBody>
           </Table>
         </TableContainer>
