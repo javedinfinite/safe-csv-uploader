@@ -7,6 +7,7 @@ import CsvDownloader from "./CsvDownloader";
 import { uploadCsv } from "../actions/employeeAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import AlertDialog from  './Dialogue'
 
 const useStyles = makeStyles((theme) => ({
   import: {
@@ -28,14 +29,19 @@ const CsvUploader = (prop) => {
 
   const classes = useStyles();
   const [file, setFile] = useState("");
+  const [open, setOpen] = React.useState(false);
   const history = useHistory();
+
+  const toggleDialogue = (value) =>{
+    setOpen(value)
+  }
 
   const upload = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", file);
     dispatch(uploadCsv(formData));
-    setTimeout(()=>history.push("/viewEmployees"),1000)
+    setTimeout(()=>setOpen(true),1000)
     
   };
 
@@ -54,6 +60,7 @@ const CsvUploader = (prop) => {
 
   return (
     <div>
+      <AlertDialog open={open} toggleDialogue={toggleDialogue}/>
       <CSVReader
         cssClass="react-csv-input"
         inputStyle={{ display: "none" }}
