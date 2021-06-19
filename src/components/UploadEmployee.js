@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CsvTable from "./Table";
+import CsvTable from "./CsvTable";
 import CsvUploader from "./CsvUploader";
 import CsvDownloader from "./CsvDownloader";
 

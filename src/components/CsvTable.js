@@ -10,8 +10,6 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import ClearIcon from "@material-ui/icons/Clear";
-// import Pagination from "@material-ui/lab/Pagination";
-import axios from "axios";
 import React from "react";
 import EnhancedTableHead from "./TableHead";
 import EnhancedTableToolbar from "./TableToolbar";
@@ -22,7 +20,9 @@ export default function CsvTable(prop) {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("id");
   const [selected, setSelected] = React.useState([]);
+  const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (event, property) => {
     console.log("property........" + property);
@@ -60,25 +60,13 @@ export default function CsvTable(prop) {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, page) => {
-    console.log( page )
-    // setPage(page);
-    // console.log("prop.Currentpage", prop.currentPage)
-    console.log("...........",prop.currentPage-1, prop.pageLimit)
-    prop.setData(page+1, prop.pageLimit );
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
   };
 
-  // console.log("prop.pageLimit", prop.pageLimit, prop.currentPage)
-  // console.log("...........",prop.currentPage * prop.pageLimit, prop.currentPage * prop.pageLimit + prop.pageLimit)
-
   const handleChangeRowsPerPage = (event) => {
-    prop.setData(1, parseInt(event.target.value, 10));
-    console.log("prop.pageLimit", prop.pageLimit, prop.currentPage)
-    // console.log("...........",prop.currentPage * prop.pageLimit, prop.currentPage * prop.pageLimit + prop.pageLimit)
-    console.log("...........",prop.currentPage-1, prop.pageLimit)
-    
-    // setRowsPerPage(parseInt(event.target.value, 10));
-    // setPage(0);
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   const handleChangeDense = (event) => {
@@ -91,14 +79,13 @@ export default function CsvTable(prop) {
     console.log("clear table clicked");
     rows.length = 0;
     setOrder(order == "desc" ? "asc" : "desc");
-    // setRowsPerPage(5);
+    setRowsPerPage(5);
   };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  // const emptyRows = prop.pageLimit - Math.min(prop.pageLimit, rows.length - prop.currentPage-1 * prop.pageLimit);
-
-
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -122,7 +109,7 @@ export default function CsvTable(prop) {
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
-                .slice(0, prop.pageLimit) //page * rowsPerPage, page * rowsPerPage + rowsPerPage
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
@@ -165,29 +152,25 @@ export default function CsvTable(prop) {
                     </TableRow>
                   );
                 })}
-              {/* {emptyRows > 0 && (
+              {emptyRows > 0 && (
                 <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
                   <TableCell colSpan={6} />
                 </TableRow>
-              )} */}
+              )}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={prop.TotalRows}
-          rowsPerPage={prop.pageLimit}
-          page={prop.currentPage-1}
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      {/* <Pagination
-        count={prop.totalPages}
-        variant="outlined"
-        onChange={getDataOnPageChange}
-      /> */}
+
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"

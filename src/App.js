@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import SearchAppBar from "./components/Appbar";
 import ViewEmployees from "./components/ViewEmployee";
