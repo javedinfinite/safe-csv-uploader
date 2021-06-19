@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/safe-csv-uploader/static/css/main.9d5b29c0.chunk.css",
+    "main.js": "/safe-csv-uploader/static/js/main.fde49621.chunk.js",
+    "main.js.map": "/safe-csv-uploader/static/js/main.fde49621.chunk.js.map",
+    "runtime-main.js": "/safe-csv-uploader/static/js/runtime-main.1060fdce.js",
+    "runtime-main.js.map": "/safe-csv-uploader/static/js/runtime-main.1060fdce.js.map",
+    "static/js/2.2b65a8b9.chunk.js": "/safe-csv-uploader/static/js/2.2b65a8b9.chunk.js",
+    "static/js/2.2b65a8b9.chunk.js.map": "/safe-csv-uploader/static/js/2.2b65a8b9.chunk.js.map",
+    "static/js/3.ae675356.chunk.js": "/safe-csv-uploader/static/js/3.ae675356.chunk.js",
+    "static/js/3.ae675356.chunk.js.map": "/safe-csv-uploader/static/js/3.ae675356.chunk.js.map",
+    "index.html": "/safe-csv-uploader/index.html",
+    "static/css/main.9d5b29c0.chunk.css.map": "/safe-csv-uploader/static/css/main.9d5b29c0.chunk.css.map",
+    "static/js/2.2b65a8b9.chunk.js.LICENSE.txt": "/safe-csv-uploader/static/js/2.2b65a8b9.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1060fdce.js",
+    "static/js/2.2b65a8b9.chunk.js",
+    "static/css/main.9d5b29c0.chunk.css",
+    "static/js/main.fde49621.chunk.js"
+  ]
+}
